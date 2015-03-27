@@ -2,7 +2,6 @@ package com.sleepism.bhargav.sleepism;
 
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.support.v7.app.ActionBarActivity;
@@ -20,7 +19,6 @@ public class MainActivity extends ActionBarActivity {
     ComponentName receiver;
     PackageManager pm;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,15 +29,6 @@ public class MainActivity extends ActionBarActivity {
         pm.setComponentEnabledSetting(receiver,
                 PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                 PackageManager.DONT_KILL_APP);//keep it disabled by default. that is before switching it on
-
-        SharedPreferences prefs = context.getSharedPreferences(
-                "com.sleepism.bhargav.sleepism", Context.MODE_PRIVATE);
-
-        //clear all the numbers
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.clear();
-        editor.commit();
-
     }
 
 

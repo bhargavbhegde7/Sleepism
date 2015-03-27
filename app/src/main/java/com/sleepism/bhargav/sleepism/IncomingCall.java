@@ -3,13 +3,8 @@ package com.sleepism.bhargav.sleepism;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.media.AudioManager;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.telephony.TelephonyManager;
-
-import java.util.Map;
 
 /**
  * Created by bhargav on 3/25/2015.
@@ -17,43 +12,46 @@ import java.util.Map;
 public class IncomingCall extends BroadcastReceiver {
 
     public static int count = 1;
-    AudioManager am;
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
-        am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);//get the audio manager
-
-        SharedPreferences prefs = context.getSharedPreferences(
-                "com.sleepism.bhargav.sleepism", Context.MODE_PRIVATE);
-
-
-
         if(count == 1)
         {
-            //set it to silent mode when ever a call comes, before checking if it is the second time
-            //For Silent mode
-            am.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+            /*Bundle bundle = intent.getExtras();
+
+            if (null == bundle)
+            {
+                System.out.println("bundle is null");
+                return;
+            }
+
+            String state = bundle.getString(TelephonyManager.EXTRA_STATE);
+
+            if (TelephonyManager.EXTRA_STATE_RINGING.equalsIgnoreCase(state))//ringing
+            {
+                System.out.println("state is ringing");
+
+                String incomingNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
+                System.out.println(" number is :  "+incomingNumber);
+                return;
+            }
+
+
+            if (TelephonyManager.EXTRA_STATE_IDLE.equalsIgnoreCase(state))//hung up
+            {
+                System.out.println("state is idle");
+                return;
+            }
+            if (TelephonyManager.EXTRA_STATE_OFFHOOK.equalsIgnoreCase(state))//received the call
+            {
+                System.out.println("state is off hook");
+                return;
+            }*/
 
             if(intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER) != null)
             {
                 String incomingNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
                 System.out.println(" number is :  " + incomingNumber);
-                Map<String,?> keys =  prefs.getAll();
-                System.out.println("The number is : " + keys.get(incomingNumber));
-                if(keys.get(incomingNumber) == null)//number is not found in the list
-                {
-                    //add the number to the list
-                    SharedPreferences.Editor editor = prefs.edit();
-                    editor.putString(incomingNumber, incomingNumber);
-                    editor.commit();
-                }
-                else//number is already there
-                {
-                    //enable the ringer
-                    //For Normal mode
-                    am.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-                }
             }
 
             count++;
