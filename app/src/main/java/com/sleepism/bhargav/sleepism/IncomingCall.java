@@ -38,9 +38,9 @@ public class IncomingCall extends BroadcastReceiver {
             if(intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER) != null)
             {
                 String incomingNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
-                System.out.println(" number is :  " + incomingNumber);
+                System.out.println(" number is ::  " + incomingNumber);
                 Map<String,?> keys =  prefs.getAll();
-                System.out.println("The number is : " + keys.get(incomingNumber));
+                System.out.println("The number is :: " + keys.get(incomingNumber));
                 if(keys.get(incomingNumber) == null)//number is not found in the list
                 {
                     //add the number to the list
